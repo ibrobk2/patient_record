@@ -1,5 +1,23 @@
 <?php
+include "../includes/connection.php";
+session_start();
 
+if(isset($_SESSION['username'])){
+
+
+$username = $_SESSION['username'];
+
+$sql = "SELECT * FROM users WHERE role='doctor' AND username='$username'";
+$result = mysqli_query($conn, $sql);
+
+if($result){
+    $row = mysqli_fetch_assoc($result);
+
+}
+
+}else{
+    $row['full_name'] = "";
+}
 
 
 
@@ -25,18 +43,18 @@
 
     <div class="container">
         <h2 style="text-align:center;">Drugs Prescrition Form</h2>
-        <form action="process.php" class="form">
+        <form action="process.php" class="form" method="POST">
         <div class="form-group">
                 <label for="patient_id">patient_id:</label>
                 <input type="text" id="patient_id" name="patient_id"  class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="patient_name">patient_name:</label>
-                <input type="text" id="patient_name" name="patient_name"  class="form-control" required>
+                <input type="text" id="patient_name" name="patient_name"  readonly class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="patient_age">patient_age:</label>
-                <input type="text" id="patient_age" name="patient_age"  class="form-control" required>
+                <input type="text" id="patient_age" name="patient_age" readonly  class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="drugs_prescription">drugs_prescription:</label>
@@ -48,7 +66,7 @@
             </div> 
             <div class="form-group">
                 <label for="prescribing_doctor">Prescribing_Doctor:</label>
-                <input type="text" id="doctors_name" name="doctors_name"  class="form-control" required>
+                <input type="text" id="doctors_name" name="doctors_name"  class="form-control" value="<?=$row['full_name']; ?>" readonly>
             </div> 
             <br>
             <div class="form-group">
@@ -57,5 +75,25 @@
             <br>
         </form>
     </div>
+    <!-- <script src="../static/jquery-3.6.0.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script>
+$(document).ready(function () {
+    $("#patient_id").change(function () {
+        var patient_id = $("#patient_id").val();
+        $.ajax({
+            type: "POST",
+            url: "fetch_pres_patient.php",
+            data: {patientId: patient_id},
+            dataType: "json",
+            success: function (response) {
+                $("#patient_name").val(response.data.full_name);
+                $("#patient_age").val(response.data.age);
+            }
+        });
+    })
+});
+    </script>
 </body>
 </html>

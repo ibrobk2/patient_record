@@ -40,19 +40,19 @@ include "../includes/connection.php";
         <th>Patient_Name</th>
         <th>Patient_Age</th>
         <th>Drug(s)_Prescribed</th>
-        <th>Test_name</th>
+        <!-- <th>Test_name</th> -->
         <th>Dosage</th>
         <th>Prescribing_Doctor</th>
         <!-- <th></th> -->
         <th>Date</th>
         <!-- <th>test_ten</th> -->
-        <th colspan="2">Action</th>
+        <th colspan="2" class="text-center">Action</th>
 
         </tr>
         <?php
             $sn = 1;
             include "../includes/connection.php";
-            $sql = "SELECT * FROM prescriptions";
+            $sql = "SELECT * FROM prescriptions ORDER BY prescription_id DESC";
 
             $result = mysqli_query($conn, $sql);
 
@@ -70,7 +70,7 @@ include "../includes/connection.php";
            
             <!-- <td><?php //echo $row['test_ten']; ?></td> -->
             <td><a href="../doctor/doctors_request.php?edit=<?php echo $row['id'] ?>" class="btn btn-primary"><i class="las la-eye"></i>View Result</a></td>
-            <td><a href="del_request.php?del=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a></td>
+            <td><a href="del_pre.php?del=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a></td>
         </tr>
    <?php }?>
     </table>

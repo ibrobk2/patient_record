@@ -107,7 +107,7 @@ if(isset($_POST['btn_pre'])){
   $doctors_name = $_POST['doctors_name'];
 
 //SQL statement to Insert into database
-$sql = "INSERT INTO () VALUES () WHERE (SELECT patient_id FROM patients=$patient_id)";
+$sql = "INSERT INTO prescriptions (`patient_id`, `patient_name`, `patient_age`, `medication_name`, `dosage`, `prescribing_doctor`) VALUES ((SELECT patient_id FROM patients WHERE patient_id=$patient_id), '$patient_name', '$patient_age', '$drugs', '$dosage', '$doctors_name')";
 $result = mysqli_query($conn, $sql);
 if($result){
   echo "
