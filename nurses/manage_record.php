@@ -128,7 +128,7 @@ $result = mysqli_query($conn, $sql);
       <td><?=$row['emergency_contact_name']; ?></td>
       <td><?=$row['emergency_contact_number']; ?></td>
       <td><a href="#?edit=<?=$row['patient_id']; ?>" class="btn btn-primary" >Edit</a></td>
-      <td><a href="manage_record.php?delete=<?=$row['patient_id']; ?>" class="btn btn-danger">Delete</a></td>
+      <td><a href="del_patient_record.php?del=<?=$row['patient_id']; ?>" class="btn btn-danger">Delete</a></td>
     </tr>
     <?php endwhile; ?>
 

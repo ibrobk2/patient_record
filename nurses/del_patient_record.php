@@ -1,19 +1,24 @@
 <?php
 include "../includes/connection.php";
 
+
+
 if(isset($_GET['del'])){
     $id = $_GET['del'];
 
-    $sql = "DELETE FROM labtests WHERE test_id=$id";
+    $sql = "DELETE FROM patients WHERE patients.patient_id=$id";
 
     $query = mysqli_query($conn, $sql);
 
     if($query){
-        header("location:view_lab_results.php");
+        echo "Run Success";
+        // header("location: manage_record.php");
     }
     else{
         echo"error occurred";
     };
+
+    
 
 }
 
