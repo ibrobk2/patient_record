@@ -19,6 +19,32 @@ if($result){
     $row['full_name'] = "";
 }
 
+//Edit SECTION
+
+$update = false;
+$pres_id = "";
+$patient_id = "";
+$patient_name = "";
+$patient_age = "";
+$drugs = "";
+$dosage = "";
+$doctors_name ="";
+
+if(isset($_GET['edit'])){
+    $update = true;
+    $pres_id = $_GET['edit'];
+
+    $sql = "SELECT * FROM prescriptions WHERE prescription_id=$pres_id";
+    $result = mysqli_query($conn, $sql);
+    $data = mysqli_fetch_assoc($result);
+    $patient_id = $data['patient_id'];
+    $patient_name = $data['patient_name'];
+    $patient_age = $data['patient_age'];
+    $drugs = $data['medication_name'];
+    $dosage = $data['dosage'];
+    $doctors_name = $data['prescribing_doctor'];
+}
+
 
 
 ?>
@@ -42,35 +68,48 @@ if($result){
     <a href="../logout.php" style="position: absolute; right:10px;color:red;"><h2>Logout</h2></a>
 
     <div class="container">
-        <h2 style="text-align:center;">Drugs Prescrition Form</h2>
+        <?php if ($update==true): ?>
+        <h2 style="text-align:center;">Update Prescription</h2>
+        <?php else: ?>
+        <h2 style="text-align:center;">Drugs Prescription Form</h2>
+        <?php endif; ?>
         <form action="process.php" class="form" method="POST">
         <div class="form-group">
                 <label for="patient_id">patient_id:</label>
-                <input type="text" id="patient_id" name="patient_id"  class="form-control" required>
+                <input type="hidden" id="pres_id" name="pres_id" value="<?=$pres_id; ?>" class="form-control" required>
+                <input type="text" id="patient_id" name="patient_id" value="<?=$patient_id; ?>" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="patient_name">patient_name:</label>
-                <input type="text" id="patient_name" name="patient_name"  readonly class="form-control" required>
+                <input type="text" id="patient_name" name="patient_name" value="<?=$patient_name; ?>"  readonly class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="patient_age">patient_age:</label>
-                <input type="text" id="patient_age" name="patient_age" readonly  class="form-control" required>
+                <input type="text" id="patient_age" name="patient_age" readonly value="<?=$patient_age; ?>" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="drugs_prescription">drugs_prescription:</label>
-                <textarea name="drug" id="drugs_prescription" class="form-control" cols="30" rows="10" name="drugs_prescription"></textarea>
+                <textarea name="drug" id="drugs_prescription" class="form-control" cols="30" rows="10" value="<?=$drugs; ?>" name="drugs_prescription"><?=$drugs; ?></textarea>
             </div>
             <div class="form-group">
                 <label for="dosage">Dosage:</label>
-                <input type="text" id="dosage" name="dosage"  class="form-control" required>
+                <input type="text" id="dosage" name="dosage" value="<?=$dosage; ?>" class="form-control" required>
             </div> 
             <div class="form-group">
                 <label for="prescribing_doctor">Prescribing_Doctor:</label>
+                <?php if($update==true): ?>
+                <input type="text" id="doctors_name" name="doctors_name"  class="form-control" value="<?=$doctors_name; ?>" readonly>
+                <?php else: ?>
                 <input type="text" id="doctors_name" name="doctors_name"  class="form-control" value="<?=$row['full_name']; ?>" readonly>
+                <?php endif; ?>
             </div> 
             <br>
             <div class="form-group">
+                <?php if($update==true): ?>
+                <button class="btn btn-primary form-control" name="btn_pre_update">Update</button>
+                <?php else: ?>
                 <button class="btn btn-primary form-control" name="btn_pre">Submit</button>
+                <?php endif; ?>
             </div>
             <br>
         </form>

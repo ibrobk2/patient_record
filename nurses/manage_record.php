@@ -1,9 +1,11 @@
 <?php
 include "../includes/connection.php";
 
+$status = false;
 
-$sql = "SELECT * FROM patients ORDER BY patient_id DESC;";
-$result = mysqli_query($conn, $sql);
+
+
+ 
 
 
 
@@ -18,7 +20,7 @@ $result = mysqli_query($conn, $sql);
   <title>Manage Test Records</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
   <style>
     .container {
       /* max-width: 400px; */
@@ -79,17 +81,17 @@ $result = mysqli_query($conn, $sql);
     <div>
     <h2 style="text-transform:uppercase;" class="text-center">Hassan Usman Katsina Polytechnic Clinic</h2>
     <h2 style="text-transform:uppercase;" class="text-center">(Manage Patients Record)</h2>
-    <form method="POST" action="">
+    <form method="POST" action="process.php">
       <div class="form-group" >
       
         <label for="search">Search Hospital Number:</label>
-        <input type="text" id="searchTerm" name="searchTerm" class="form-control" placeholder="Enter patient by number" required>
+        <input type="text" id="searchTerm" name="searchTerm" class="form-control" placeholder="Search By Patient_Id" required>
       </div>
       <div id="searchResults"></div>
       <!-- <br> -->
       <div>
       <button type="submit" class="btn btn-primary" style="margin-top:2.5%" id="searchForm p">Find</button>
-      <button type="submit" class="btn btn-danger" style="margin-top:2.5%" id="d">Logout</button>
+      <a href="../logout.php" type="submit" class="btn btn-danger" style="margin-top:2.5%" id="d">Logout</a>
       </div>
     </form>
     </div>
@@ -97,7 +99,7 @@ $result = mysqli_query($conn, $sql);
   </div>
   <table>
     <tr>
-      <th>hospitalNumber</th>
+      <th>Patient_Id</th>
       <th>fullName</th>
       <th>DOB</th>
       <th>Address</th>
@@ -113,7 +115,10 @@ $result = mysqli_query($conn, $sql);
     </tr>
 
     <?php
-    while($row=mysqli_fetch_assoc($result)): ?>
+    require "process.php";
+   if ($status==true):
+      // $row=mysqli_fetch_assoc($result);
+    ?>
     <tr>
       <td><?=$row['patient_id']; ?></td>
       <td><?=$row['full_name']; ?></td>
@@ -127,34 +132,39 @@ $result = mysqli_query($conn, $sql);
       <td><?=$row['insurance_policy_number']; ?></td>
       <td><?=$row['emergency_contact_name']; ?></td>
       <td><?=$row['emergency_contact_number']; ?></td>
-      <td><a href="#?edit=<?=$row['patient_id']; ?>" class="btn btn-primary" >Edit</a></td>
-      <td><a href="del_patient_record.php?del=<?=$row['patient_id']; ?>" class="btn btn-danger">Delete</a></td>
+      <td><a href='../medical/register_patient.php?edit=<?=$row['patient_id']; ?>' class='btn btn-primary' >Edit</a></td>
+      <td><a href='del_patient_record.php?del=<?=$row['patient_id']; ?>' class='btn btn-danger'>Delete</a></td>
     </tr>
-    <?php endwhile; ?>
+    <?php else: ?>
+      <tr></tr>
+      <?php endif;  ?>
 
   </table>
+ 
 </body>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
       // Submit form with AJAX
-      $('#searchForm').submit(function(event) {
-        event.preventDefault(); // Prevent form submission
+      // $('#searchForm').submit(function(event) {
+      //   event.preventDefault(); // Prevent form submission
 
-        var searchTerm = $('#searchTerm').val();
+      //   var searchTerm = $('#searchTerm').val();
 
-        // AJAX request
-        $.ajax({
-          url: 'search.php', // The PHP script to handle the search
-          type: 'POST',
-          data: { searchTerm: searchTerm },
-          success: function(response) {
-            $('#searchResults').html(response); // Display the search results
-          }
-        });
-      });
+      //   // AJAX request
+      //   $.ajax({
+      //     url: 'search.php', // The PHP script to handle the search
+      //     type: 'POST',
+      //     data: { searchTerm: searchTerm },
+      //     success: function(response) {
+      //       $('#searchResults').html(response); // Display the search results
+          // }
+        // });
+      // });
     });
   </script>
 
+
 </html>
+<?php ?>

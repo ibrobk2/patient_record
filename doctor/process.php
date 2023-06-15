@@ -119,6 +119,25 @@ if($result){
 }
 }
 
+//UPDATE PRESCRIPTION SECTION
+if(isset($_POST['btn_pre_update'])){
+  $pres_id = $_POST['pres_id'];
+  // $patient_id = $_POST['patient_id'];
+  // $patient_name = $_POST['patient_name'];
+  // $patient_age = $_POST['patient_age'];
+  $drugs = $_POST['drug'];
+  $dosage = $_POST['dosage'];
+  // $doctors_name = $_POST['doctors_name'];
+
+  //SQL statement
+  $sql = "UPDATE `prescriptions` SET `medication_name`='$drugs',`dosage`='$dosage' WHERE prescription_id=$pres_id";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+    header("Location: view_doctors_prescriptions.php");
+  }
+}
+
 
 
 ?>

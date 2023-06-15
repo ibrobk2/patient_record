@@ -2,9 +2,9 @@
 session_start();
 include_once "../../includes/connection.php";
 
-if(!isset($_SESSION['username'])){
-    header("Location: index.php");
-}else{ 
+// if(!isset($_SESSION['username'])){
+//     header("Location: index.php");
+// }else{ 
 
 ?>
 <!DOCTYPE html>
@@ -645,4 +645,4 @@ if(!isset($_SESSION['username'])){
 
 </html>
 
-<?php } ?>
+<?php //} ?>

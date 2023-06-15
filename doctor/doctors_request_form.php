@@ -12,6 +12,9 @@ $test_seven = "";
 $test_eight = "";
 $test_nine = "";
 $test_ten = "";
+$patient_id = "";
+$patient_name = "";
+$patient_age = "";
 
 if(isset($_GET['edit'])){
     $id = $_GET['edit'];
@@ -22,6 +25,9 @@ if(isset($_GET['edit'])){
     $query = mysqli_query($conn, $sql);
 
     $row = mysqli_fetch_assoc($query);
+    $patient_id = $row['patient_id'];
+    $patient_name = $row['patient_name'];
+    $patient_age = $row['age'];
     $test_one = $row['test_one'];
     $test_two = $row['test_two'];
     $test_three = $row['test_three'];
@@ -74,6 +80,18 @@ if(isset($_GET['edit'])){
         <div class="doctors_request">
             <form action="process.php" class="form" method="post">
             <div class="form-group">
+                <label for="patient_id">Patient_Id:</label>
+                <input type="text" id="patient_id" name="Patient_id" value="<?php echo $patient_id; ?>" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="patient_id">Patient_Name:</label>
+                <input type="text" id="patient_name" name="Patient_name" value="<?php echo $patient_name; ?>" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="patient_age">Patient_Age:</label>
+                <input type="text" id="patient_age" name="Patient_age" value="<?php echo $patient_age; ?>" class="form-control" required>
+            </div>
+            <div class="form-group">
                 <label for="test_one">Test_one:</label>
                 <input type="hidden" id="test_one" name="id" value="<?php echo $id; ?>" class="form-control" required>
                 <input type="text" id="test_one" name="test_one" value="<?php echo $test_one; ?>" class="form-control" required>
@@ -123,6 +141,25 @@ if(isset($_GET['edit'])){
 
         </div>
     </div>
+
+    <script src="jquery.js"></script>
+    <script>
+       $(document).ready(function () {
+    $("#patient_id").change(function () {
+        var patient_id = $("#patient_id").val();
+        $.ajax({
+            type: "POST",
+            url: "fetch_patient_details.php",
+            data: {patientId: patient_id},
+            dataType: "json",
+            success: function (response) {
+                $("#patient_name").val(response.data.full_name);
+                $("#patient_age").val(response.data.age);
+            }
+        });
+    })
+});
+    </script>
 </body>
 </head>
 </html>

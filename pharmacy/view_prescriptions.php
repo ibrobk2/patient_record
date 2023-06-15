@@ -69,8 +69,8 @@ include "../includes/connection.php";
             <td><?php echo $row['created_at']; ?></td>
            
             <!-- <td><?php //echo $row['test_ten']; ?></td> -->
-            <td><a href="../doctor/doctors_request.php?edit=<?php echo $row['id'] ?>" class="btn btn-primary"><i class="las la-eye"></i>View Result</a></td>
-            <td><a href="del_request.php?del=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a></td>
+            <td><a href="../Doctor/prescription.php?edit=<?php echo $row['prescription_id'] ?>" class="btn btn-primary"><i class="las la-eye"></i>View Result</a></td>
+            <td><a href="del_pres.php?del=<?php echo $row['prescription_id'] ?>" class="btn btn-danger">Delete</a></td>
         </tr>
    <?php }?>
     </table>

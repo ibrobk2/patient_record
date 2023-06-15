@@ -7,8 +7,10 @@ include_once '../includes/connection.php';
 //   return htmlspecialchars(trim($input));
 // }
 
+
+
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_login'])) {
   // Get the username and password from the form
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -46,4 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Close the database connection
   mysqli_close($conn);
 }
-?>
+
+//FETCH RECORD SECTION
+// include "../includes/connection.php";
+
+ if(isset($_POST['searchTearm'])){
+  $patient_id = $POST['searchTerm'];
+$sql = "SELECT * FROM patients WHERE patient_id=$patient_id";
+$result = mysqli_query($conn, $sql);
+
+if(isset($result)){
+  $row=mysqli_fetch_assoc($result);
+  header("Location: manage_record.php?status=success");
+
+
+
+  }
+
+}
