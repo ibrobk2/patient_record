@@ -31,7 +31,7 @@ include "../includes/connection.php";
     <?php include "../includes/header.php"; ?>
     <a href="../logout.php" style="position: absolute; right:10px;color:red;"><h2>Logout</h2></a>
         <div class="container">
-            <h2>Doctors Lab Requests</h2>
+            <h2>Results of Doctors Lab Requests</h2>
             <hr>
 <table class="table table-control">
     <tr>
@@ -70,7 +70,7 @@ include "../includes/connection.php";
             <td><?php echo $row['lab_staff']; ?></td>
             <td><?php echo $row['created_at']; ?></td>
             <!-- <td><?php //echo $row['test_ten']; ?></td> -->
-            <td><a href="../doctor/doctors_request.php?edit=<?php echo $row['test_id'] ?>" class="btn btn-primary"><i class="las la-eye"></i>View Result</a></td>
+            <td><a href="../lab/print_doctors_lab_request.php?print=<?php echo $row['test_id'] ?>" class="btn btn-primary"><i class="las la-eye"></i>View Result</a></td>
             <td><a href="del_lab_results.php?del=<?php echo $row['test_id'] ?>" class="btn btn-danger">Delete</a></td>
         </tr>
    <?php }?>

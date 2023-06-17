@@ -8,7 +8,7 @@ if (isset($_POST['patientId'])) {
     $query = "SELECT full_name, age FROM patients WHERE patient_id=$patient_id";
     $result = mysqli_query($conn, $query);
     
-    if ($result) {
+    if (mysqli_num_rows($result)>0) {
       // Fetch the data rows
     //   $data = array();
     //   while $row = mysqli_fetch_assoc($result)) 

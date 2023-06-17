@@ -74,6 +74,7 @@ if(isset($_GET['edit'])){
     }
     </style>
 <body>
+    <a href="../logout.php"><h3 style="color:red; text-align:right;">Logout</h3></a>
     <div class="container">
         <h2>Doctors Lab. Test/Scan Request Form</h2>
         <hr>
