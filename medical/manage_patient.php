@@ -90,7 +90,7 @@ $result = mysqli_query($conn, $sql);
         <label for="search">Search Hospital Number:</label>
         <input type="text" id="searchTerm" name="searchTerm" class="form-control" placeholder="Enter patient by number" required>
       </div>
-      <div id="searchResults"></div>
+     
       <!-- <br> -->
       <div>
       <button type="submit" class="btn btn-primary" style="margin-top:2.5%" id="searchForm p">Find</button>
@@ -98,8 +98,9 @@ $result = mysqli_query($conn, $sql);
       </div>
     </form>
     </div>
-
+    
   </div>
+  <div id="searchResults">
   <table>
     <tr>
       <th>hospitalNumber</th>
@@ -138,22 +139,23 @@ $result = mysqli_query($conn, $sql);
     <?php endwhile; ?>
 
   </table>
+  </div>
 </body>
 
 
 <script>
     $(document).ready(function() {
       // Submit form with AJAX
-      $('#searchForm').submit(function(event) {
+      $('#searchTerm').keyup(function(event) {
         event.preventDefault(); // Prevent form submission
 
-        var searchTerm = $('#searchTerm').val();
+        var searchTerm = $(this).val();
 
         // AJAX request
         $.ajax({
-          url: 'search.php', // The PHP script to handle the search
+          url: 'search_data.php', // The PHP script to handle the search
           type: 'POST',
-          data: { searchTerm: searchTerm },
+          data: { x: searchTerm },
           success: function(response) {
             $('#searchResults').html(response); // Display the search results
           }

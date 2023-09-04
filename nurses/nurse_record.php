@@ -30,19 +30,20 @@
     <form action="" method="POST">
       <div class="form-group">
         <label for="hospitalNumber">Hospital Number</label>
-        <input type="text" class="form-control" id="hospitalNumber" name="hospitalNumber"
-          placeholder="Enter Hospital Number"><input type="button" class="btn btn-primary mt-3" value="Search" name="btn_search" id="search_btn">
+        <input type="text" class="form-control" id="patient_id" name="hospitalNumber"
+          placeholder="Enter Hospital Number">
+          <!-- <input type="button" class="btn btn-primary mt-3" value="Search" name="btn_search" id="search_btn"> -->
       </div>
 
       <div class="form-group">
         <label for="fullName">Full Name</label>
-        <input type="text" class="form-control" id="fullName" name="fullName"
+        <input type="text" class="form-control" id="patient_name" name="fullName"
           placeholder="Full Name" >
       </div>
 
       <div class="form-group">
         <label for="age">Age</label>
-        <input type="text" class="form-control" id="age" name="age"
+        <input type="text" class="form-control" id="patient_age" name="age"
           placeholder="Patient Age" >
       </div>
     
@@ -77,26 +78,24 @@
     </form>
   </div>
 
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#search_btn').click(function () {
-        var hospitalNumber = $('#hospitalNumber').val();
-        // alert(hospitalNumber);
-       $.ajax({
-          type: "POST",
-          url: "patient_data.php",
-          data: {hospitalNumber: hospitalNumber},
-          dataType: "json",
-          success: function (data) {
-            $('#fullName').val(data.data.full_name);
-            $('#age').val(data.data.age);
-          }
+  <script src="../includes/jquery.js"></script>
+    <script>
+       $(document).ready(function () {
+    $("#patient_id").change(function () {
+        var patient_id = $("#patient_id").val();
+        $.ajax({
+            type: "POST",
+            url: "fetch_patient_details.php",
+            data: {patientId: patient_id},
+            dataType: "json",
+            success: function (response) {
+                $("#patient_name").val(response.data.full_name);
+                $("#patient_age").val(response.data.age);
+            }
         });
-      })
     })
-  </script>
+});
+    </script>
 </body>
 
 <?php include "../includes/footer.php"; ?>

@@ -34,6 +34,7 @@ include "../includes/connection.php";
 <table class="table table-control">
     <tr>
         <th>S/N</th>
+        <th>Patient_Id</th>
         <th>test_one</th>
         <th>test_two</th>
         <th>test_three</th>
@@ -57,6 +58,7 @@ include "../includes/connection.php";
         ?>
         <tr>
             <td><?php echo $row['id']; ?></td>
+            <td><?php echo $row['patient_id']; ?></td>
             <td><?php echo $row['test_one']; ?></td>
             <td><?php echo $row['test_two']; ?></td>
             <td><?php echo $row['test_three']; ?></td>
